@@ -1,75 +1,36 @@
-.nav {
-  position: fixed;
+.bar {
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  height: 60px;
-  background: rgba(10, 13, 15, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  z-index: 10;
+  background: rgba(246, 245, 241, 0.92);
+  backdrop-filter: saturate(140%) blur(6px);
+  border-bottom: 1px solid var(--rule);
 }
-
+.nav { display: flex; align-items: center; gap: 32px; height: 60px; }
 .logo {
-  font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono); font-weight: 500; font-size: 16px;
   text-decoration: none;
-  display: flex;
-  align-items: center;
 }
-
-.logoPing {
-  color: var(--green);
+.dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--up); }
+.dot::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  border: 1.5px solid var(--up); animation: ring 2.8s ease-out infinite;
 }
-
-.logoBot {
-  color: var(--text);
+@keyframes ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  70%, 100% { transform: scale(2.6); opacity: 0; }
 }
-
-.links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.links a {
-  font-size: 13px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.links a:hover {
-  color: var(--text);
-}
-
+@media (prefers-reduced-motion: reduce) { .dot::after { animation: none; opacity: 0; } }
+.links { display: flex; gap: 24px; list-style: none; margin-left: auto; font-size: 15px; }
+.links a { text-decoration: none; color: var(--ink-2); }
+.links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
 .cta {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  padding: 8px 16px;
-  background: var(--green-dim);
-  color: var(--green);
-  border: 1px solid var(--green-border);
-  border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.2s;
+  font-size: 15px; font-weight: 600; color: var(--tg); text-decoration: none;
+  border: 1px solid var(--rule); background: #fff; padding: 7px 14px; border-radius: 7px;
 }
-
-.cta:hover {
-  background: rgba(0, 230, 118, 0.2);
-}
-
+.cta:hover { border-color: var(--tg); }
 @media (max-width: 640px) {
-  .nav {
-    padding: 0 1rem;
-  }
-  .links {
-    display: none;
-  }
+  .links { display: none; }
+  .cta { margin-left: auto; }
 }

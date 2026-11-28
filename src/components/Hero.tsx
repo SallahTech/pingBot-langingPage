@@ -1,87 +1,82 @@
 import TelegramIcon from "./TelegramIcon";
 import styles from "./Hero.module.css";
 
+// 60 checks, one per minute. The red run lines up with the outage in the chat.
+const checks = Array.from({ length: 60 }, (_, i) =>
+  i >= 38 && i < 43 ? "down" : i === 37 || i === 43 ? "slow" : "up",
+);
+
 export default function Hero() {
   return (
-    <div className={styles.hero}>
-      <div className={styles.badge}>
-        <div className={styles.dot} /> Now in beta — free to start
+    <section id="top" className={`wrap ${styles.hero}`}>
+      <div className={styles.copy}>
+        <h1 className={styles.title}>Know when your API goes down, before anyone tells you.</h1>
+        <p className={styles.sub}>
+          PingBot checks your endpoints every 60 seconds and sends you a Telegram
+          message when one stops responding, then another when it&apos;s back.
+          There&apos;s nothing to install and no account to create.
+        </p>
+        <div className={styles.actions}>
+          <a
+            href={process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}
+            className="btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <TelegramIcon />
+            Open PingBot in Telegram
+          </a>
+          <a href="#commands" className={styles.link}>See the commands</a>
+        </div>
+        <p className={styles.note}>Free, up to 10 endpoints per account.</p>
       </div>
 
-      <h1 className={styles.title}>
-        API monitoring that
-        <br />
-        lives in <em>Telegram</em>
-      </h1>
-
-      <p className={styles.sub}>
-        No dashboards. No logins. Get instant alerts when your API goes down —
-        directly in Telegram, where you already are.
-      </p>
-
-      <div className={styles.actions}>
-        <a
-          href={process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}
-          className={styles.btnPrimary}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <TelegramIcon />
-          Start free in Telegram
-        </a>
-        <a href="#how" className={styles.btnSecondary}>
-          See how it works
-        </a>
-      </div>
-
-      {/* Telegram Mockup */}
-      <div className={styles.mockupWrap}>
-        <div className={styles.tgWindow}>
-          <div className={styles.tgHeader}>
-            <div className={styles.tgAvatar}>P</div>
-            <div>
-              <div className={styles.tgName}>PingBot</div>
-              <div className={styles.tgStatus}>● online</div>
-            </div>
-          </div>
-          <div className={styles.tgBody}>
-            <div className={`${styles.msg} ${styles.msgUser}`}>
-              /add https://api.myapp.com/health Production API
-            </div>
-            <div className={`${styles.msg} ${styles.msgBot}`}>
-              <span className={styles.grn}>✓</span> Monitoring started for{" "}
-              <span className={styles.grn}>Production API</span>
-              <br />
-              <span className={styles.dim}>
-                Checking every 60s · Type /status to view
-              </span>
-            </div>
-            <div className={`${styles.msg} ${styles.msgAlert}`}>
-              <span className={styles.red}>● DOWN</span>{" "}
-              <strong>Production API</strong>
-              <br />
-              <span className={styles.dim}>
-                api.myapp.com · Down since 03:14 UTC
-              </span>
-              <br />
-              <span className={styles.dim}>
-                Error: Connection timeout (5000ms)
-              </span>
-              <br />
-              <span className={styles.dim}>Last 24h uptime: 99.2%</span>
-            </div>
-            <div className={`${styles.msg} ${styles.msgRecover}`}>
-              <span className={styles.grn}>● RECOVERED</span>{" "}
-              <strong>Production API</strong>
-              <br />
-              <span className={styles.dim}>
-                Back online · Downtime: 3 min 41s
-              </span>
-            </div>
-            <div className={styles.msgTime}>now</div>
+      <figure className={styles.phone} aria-label="Example PingBot conversation in Telegram">
+        <div className={styles.chatHead}>
+          <div className={styles.avatar} aria-hidden="true">P</div>
+          <div>
+            <div className={styles.chatName}>PingBot</div>
+            <div className={styles.chatSub}>bot</div>
           </div>
         </div>
-      </div>
-    </div>
+        <div className={styles.chat}>
+          <div className={`${styles.msg} ${styles.out}`}>
+            /add https://staging.example.com/health Staging API
+            <span className={styles.time}>09:12</span>
+          </div>
+          <div className={styles.msg}>
+            ✅ Endpoint added!
+            <br /><br />Name: Staging API
+            <br />URL: https://staging.example.com/health
+            <br /><br />Monitoring every 60 seconds.
+            <span className={styles.time}>09:12</span>
+          </div>
+          <div className={styles.day}>Today</div>
+          <div className={styles.msg}>
+            🔴 <b>Staging API is DOWN</b>
+            <br />URL: staging.example.com/health
+            <br />Down since: 14:37 UTC
+            <br />Response: 502 Bad Gateway
+            <span className={styles.time}>14:37</span>
+          </div>
+          <div className={styles.msg}>
+            🟢 <b>Staging API is back UP</b>
+            <br />URL: staging.example.com/health
+            <span className={styles.time}>14:52</span>
+          </div>
+        </div>
+        <figcaption className={styles.uptime}>
+          <div className={styles.uptimeHead}>
+            <span>Staging API · last hour</span>
+            <span className={styles.pct}>91.7%</span>
+          </div>
+          <div className={styles.bars} aria-hidden="true">
+            {checks.map((c, i) => (
+              <span key={i} className={styles[c]} />
+            ))}
+          </div>
+        </figcaption>
+      </figure>
+    </section>
   );
 }

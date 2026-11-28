@@ -1,78 +1,74 @@
 import styles from "./HowItWorks.module.css";
 
-const steps = [
+const facts = [
   {
-    num: "01",
-    title: "Open the bot",
-    desc: "Find @pingbot_app_bot on Telegram, type /start and register with your email.",
+    term: "Checks",
+    text: "Each endpoint gets an HTTP request every 60 seconds. Any URL that returns a status code works: a health route, a homepage, a webhook receiver.",
   },
   {
-    num: "02",
-    title: "Add your endpoint",
-    desc: "Type /add https://your-api.com and give it a name. PingBot starts monitoring immediately.",
+    term: "Alerts",
+    text: "You get a message only when the status changes: down, slow, or back up. A flapping service won't flood your chat.",
   },
   {
-    num: "03",
-    title: "Get instant alerts",
-    desc: "The moment your API goes down, you get a Telegram message with cause, duration, and uptime.",
+    term: "No signup",
+    text: "Your Telegram account is your PingBot account. Press Start in the bot and add a URL. There are no emails or passwords.",
   },
   {
-    num: "04",
-    title: "Recovery alert",
-    desc: "When it comes back up, you get another message with exact downtime duration. Stay in the loop.",
+    term: "Control",
+    text: "Pause an endpoint during a deploy, resume it after, or edit and remove it, all from the chat.",
   },
 ];
 
 const commands = [
-  { name: "/register <email> <password>", desc: "Create account" },
-  { name: "/login <email> <password>", desc: "Login to existing account" },
-  { name: "/status", desc: "View all endpoints with live status 🟢🔴🟡" },
-  { name: "/add <url> <name>", desc: "Add endpoint to monitor" },
-  { name: "/update <id> <url> <name>", desc: "Update an endpoint" },
+  { name: "/add <url> <name>", desc: "Start monitoring an endpoint" },
+  { name: "/status", desc: "List your endpoints and their current status" },
+  { name: "/update <id> <url> <name>", desc: "Change an endpoint" },
   { name: "/pause <id>", desc: "Pause monitoring" },
   { name: "/resume <id>", desc: "Resume monitoring" },
-  { name: "/remove <id>", desc: "Delete endpoint" },
-  { name: "/upgrade", desc: "Upgrade to Pro plan" },
+  { name: "/remove <id>", desc: "Delete an endpoint" },
+  { name: "/help", desc: "Show all commands" },
 ];
 
 export default function HowItWorks() {
   return (
-    <section id="how" className={styles.section}>
-      <div className={styles.label}>How it works</div>
-      <h2 className={styles.title}>
-        Set up in under
-        <br />3 minutes
-      </h2>
-      <p className={styles.sub}>
-        No config files. No dashboards. Just open Telegram and type a command.
-      </p>
-
-      <div className={styles.steps}>
-        {steps.map((s) => (
-          <div key={s.num} className={styles.step}>
-            <div className={styles.stepNum}>{s.num}</div>
-            <h3>{s.title}</h3>
-            <p>{s.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className={styles.commands}>
-        <div className={styles.cmdHeader}>
-          <div className={styles.cmdDots}>
-            <div className={styles.cmdDot} style={{ background: "#ff5f56" }} />
-            <div className={styles.cmdDot} style={{ background: "#ffbd2e" }} />
-            <div className={styles.cmdDot} style={{ background: "#27c93f" }} />
-          </div>
-          PingBot commands
+    <>
+      <section id="how" className="section">
+        <div className="wrap">
+          <p className="eyebrow">How it works</p>
+          <h2 className="h2">Add a URL in the chat. PingBot does the rest.</h2>
+          <dl className={styles.facts}>
+            {facts.map((f) => (
+              <div key={f.term} className={styles.fact}>
+                <dt>{f.term}</dt>
+                <dd>{f.text}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-        {commands.map((c) => (
-          <div key={c.name} className={styles.cmdRow}>
-            <div className={styles.cmdName}>{c.name}</div>
-            <div className={styles.cmdDesc}>{c.desc}</div>
-          </div>
-        ))}
-      </div>
-    </section>
+      </section>
+
+      <section id="commands" className="section">
+        <div className="wrap">
+          <p className="eyebrow">Commands</p>
+          <h2 className="h2">Everything happens in the chat.</h2>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th scope="col">Command</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              {commands.map((c) => (
+                <tr key={c.name}>
+                  <td><code>{c.name}</code></td>
+                  <td>{c.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </>
   );
 }

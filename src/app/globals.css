@@ -1,35 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0a0d0f;
-  --bg2: #111518;
-  --bg3: #181d21;
-  --border: rgba(255,255,255,0.07);
-  --border-bright: rgba(255,255,255,0.13);
-  --green: #00e676;
-  --green-dim: rgba(0,230,118,0.12);
-  --green-border: rgba(0,230,118,0.3);
-  --red: #ff4d4d;
-  --yellow: #ffd600;
-  --text: #e8eaed;
-  --muted: #7a8390;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Sora', sans-serif;
-}
-
-@theme inline {
-  --color-bg: var(--bg);
-  --color-bg2: var(--bg2);
-  --color-bg3: var(--bg3);
-  --color-border: var(--border);
-  --color-border-bright: var(--border-bright);
-  --color-green: var(--green);
-  --color-green-dim: var(--green-dim);
-  --color-green-border: var(--green-border);
-  --color-red: var(--red);
-  --color-yellow: var(--yellow);
-  --color-text: var(--text);
-  --color-muted: var(--muted);
+  --paper: #f6f5f1;
+  --paper-2: #efede7;
+  --ink: #17191d;
+  --ink-2: #3b4048;
+  --muted: #646b75;
+  --rule: #dedbd3;
+  --tg: #2481cc;
+  --tg-dark: #1c6db0;
+  --up: #1f9d55;
+  --down: #d93636;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --wrap: 1040px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,20 +21,63 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: radial-gradient(1200px 500px at 85% -10%, rgba(36,129,204,0.07), transparent 60%), var(--paper);
+  background-repeat: no-repeat;
+  background-color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.6;
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--tg); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+.section { padding: 88px 0; border-top: 1px solid var(--rule); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 12px;
 }
 
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.3; }
+.h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+  max-width: 22ch;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--tg);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 13px 20px;
+  border-radius: 9px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 1px 2px rgba(23,25,29,0.12), 0 6px 16px -8px rgba(36,129,204,0.55);
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover {
+  background: var(--tg-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 2px 4px rgba(23,25,29,0.12), 0 10px 22px -10px rgba(36,129,204,0.6);
+}
+.btn:active { transform: none; }
+
+::selection { background: rgba(36,129,204,0.18); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
 }

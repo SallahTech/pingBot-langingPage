@@ -1,23 +1,17 @@
 import type { Metadata } from "next";
-import { Sora, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const sora = Sora({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-});
-
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-jetbrains",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "PingBot — API Monitoring in Telegram",
+  title: "PingBot: uptime alerts in Telegram",
   description:
-    "No dashboards. No logins. Get instant alerts when your API goes down — directly in Telegram, where you already are.",
+    "PingBot checks your endpoints every 60 seconds and messages you in Telegram when one goes down, and again when it comes back.",
 };
 
 export default function RootLayout({
@@ -26,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sora.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={jetbrainsMono.variable}>
       <body>{children}</body>
     </html>
   );
